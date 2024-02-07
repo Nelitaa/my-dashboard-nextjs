@@ -48,7 +48,8 @@ export const Sidebar = () => {
                   src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c" 
                   alt="User avatar"
                   width={50}
-                  height={50} 
+                  height={50}
+                  priority
                 />
             </span>
             <span className="text-sm md:text-base font-bold">
