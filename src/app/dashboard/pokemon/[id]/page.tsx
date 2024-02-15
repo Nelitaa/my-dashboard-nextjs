@@ -1,7 +1,18 @@
 import { Pokemon } from "@/pokemons";
+import { Metadata } from "next";
 
 interface Props {
   params: { id: string };
+}
+
+export async function generateMetadata({ params }:Props): Promise<Metadata> {
+
+  const { id, name } = await getPokemon(params.id);
+
+  return {
+    title: `Pokemon #${ id }: ${ name }`,
+    description: `This is the ${ name } page`,
+  }
 }
 
 const getPokemon = async(id: string): Promise<Pokemon> => {
