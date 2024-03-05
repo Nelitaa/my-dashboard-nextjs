@@ -1,10 +1,11 @@
 'use client';
 
 import Link from "next/link"
-import { SimplePokemon } from "../interfaces/simple-pokemon";
 import Image from 'next/image'
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
-import { useAppSelector } from "@/store";
+import { SimplePokemon } from "../interfaces/simple-pokemon";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { toggleFavorite } from "@/store/pokemons/pokemons";
 
 interface Props {
   pokemon: SimplePokemon;
@@ -14,6 +15,12 @@ export const PokemonCard = ({ pokemon }:Props) => {
   
   const { id, name } = pokemon;
   const isFavorite = useAppSelector( state => !!state.pokemons[id] )
+  const dispatch = useAppDispatch();
+
+  const onToggle = () => {
+    dispatch( toggleFavorite(pokemon) );
+  }
+
   return (
     <div className="mx-auto right-0 mt-2 w-60">
       <div className="flex flex-col bg-white rounded overflow-hidden shadow-lg">
@@ -37,7 +44,8 @@ export const PokemonCard = ({ pokemon }:Props) => {
           </div>
           </div>
           <div className="border-b">
-            <Link href="/dashboard/main" className="flex items-center px-4 py-2 hover:bg-gray-100" >
+            <div onClick={ onToggle }
+              className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer" >
               <div className="text-red-600">
                 {
                   isFavorite 
@@ -55,7 +63,7 @@ export const PokemonCard = ({ pokemon }:Props) => {
                 </p>
                 <p className="text-xs text-gray-500">Click to change</p>
               </div>
-            </Link>
+            </div>
           </div>
       </div>
     </div>
